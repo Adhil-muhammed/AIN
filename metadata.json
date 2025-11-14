@@ -1,0 +1,5 @@
+{
+  "description": "A financial application interface for buying and selling gold and silver, featuring real-time price tracking, a promotional banner, and a currency/weight converter.",
+  "requestFramePermissions": [],
+  "name": "App"
+}
