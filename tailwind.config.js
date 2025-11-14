@@ -2,6 +2,18 @@
 export default {
   darkMode: ["class"],
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  safelist: [
+    // Ensure navbar background gradient classes are always included
+    "from-[#8A1538]/98",
+    "to-[#8A1538]/95",
+    "bg-[#8A1538]/98",
+    "bg-[#8A1538]/95",
+    "bg-[#8A1538]",
+    "text-[#8A1538]",
+    "hover:bg-[#8A1538]/90",
+    "focus:ring-[#8A1538]",
+    "focus:border-[#8A1538]",
+  ],
 
   theme: {
     extend: {
