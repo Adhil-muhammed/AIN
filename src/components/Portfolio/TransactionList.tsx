@@ -1,4 +1,4 @@
-import { transactions } from "@/src/constants/prices";
+import { transactions } from "@/constants/prices";
 import { ChevronDown, Filter, RefreshCw, DollarSign } from "lucide-react";
 
 export const TransactionList = () => (

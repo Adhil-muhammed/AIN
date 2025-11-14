@@ -1,29 +1,52 @@
+// {
+//   "compilerOptions": {
+//     "target": "ES2022",
+//     "experimentalDecorators": true,
+//     "useDefineForClassFields": false,
+//     "module": "ESNext",
+//     "lib": ["ES2022", "DOM", "DOM.Iterable"],
+//     "skipLibCheck": true,
+//     "types": ["node"],
+//     "moduleResolution": "bundler",
+//     "isolatedModules": true,
+//     "moduleDetection": "force",
+//     "allowJs": true,
+//     "jsx": "react-jsx",
+//     "allowImportingTsExtensions": true,
+//     "noEmit": true,
+
+//     /* --- ADD AND CORRECT THESE LINES --- */
+//     "baseUrl": ".",
+//     "paths": {
+//       "@/*": ["src/*"]
+//     }
+//   },
+//   "include": ["src"] // It's good practice to add this
+// }
 {
   "compilerOptions": {
     "target": "ES2022",
+    "module": "ESNext",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "jsx": "react-jsx",
+    "allowJs": true,
+    "noEmit": true,
     "experimentalDecorators": true,
     "useDefineForClassFields": false,
-    "module": "ESNext",
-    "lib": [
-      "ES2022",
-      "DOM",
-      "DOM.Iterable"
-    ],
-    "skipLibCheck": true,
-    "types": [
-      "node"
-    ],
     "moduleResolution": "bundler",
     "isolatedModules": true,
     "moduleDetection": "force",
-    "allowJs": true,
-    "jsx": "react-jsx",
-    "paths": {
-      "@/*": [
-        "./*"
-      ]
-    },
     "allowImportingTsExtensions": true,
-    "noEmit": true
-  }
+    "skipLibCheck": true,
+    "types": ["node"],
+
+    /* --- Path alias configuration --- */
+    "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/lib/*": ["lib/*"],
+      "@/*": ["src/*"]
+    }
+  },
+  "include": ["src"]
 }

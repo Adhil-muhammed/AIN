@@ -9,9 +9,8 @@ import { BottomNavBar } from "./components/layout/BottomNavBar";
 export const App = () => {
   return (
     <BrowserRouter>
-      <div>
+      <div className="w-full max-w-sm mx-auto min-h-screen relative overflow-x-hidden">
         <Routes>
-          {/* The 'exact' prop has been removed from this line */}
           <Route path="/" element={<HomePage />} />
           <Route path="/portfolio" element={<PortfolioPage />} />
           <Route path="/store" element={<StorePage />} />
