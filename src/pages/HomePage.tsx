@@ -6,6 +6,7 @@ import { ConverterCard } from "../components/home/ConverterCard";
 import { useConverter } from "../hooks/useConverter";
 import { PaginationDots } from "../components/home/PaginationDots";
 import { TransactionSection } from "../components/home/TransactionSection";
+import { HomeProduct } from "./HomeProduct";
 
 export const HomePage = () => {
   const [activeToggle, setActiveToggle] = useState("buy");
@@ -29,6 +30,7 @@ export const HomePage = () => {
       <button className="w-full py-4 bg-[#8A1538] text-white border-none rounded-xl text-lg font-semibold cursor-pointer mt-4 hover:bg-[#8A1538]/90 transition-colors">
         {activeToggle === "buy" ? "Buy" : "Sell"}
       </button>
+      <HomeProduct />
     </div>
   );
 };

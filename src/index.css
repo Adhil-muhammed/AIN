@@ -39,6 +39,10 @@ input[type="number"] {
   scrollbar-width: none;
 }
 
+.material-icons-outlined {
+  font-size: inherit;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;

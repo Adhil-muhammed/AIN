@@ -1,5 +1,4 @@
 import AINLogo from "@/assets/svg/AIN-log.svg";
-import { IconButton } from "@/shared/component/IconButton";
 
 export const GenericHeader = () => (
   <header className="flex justify-between items-center py-2">
