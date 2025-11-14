@@ -1,3 +1,4 @@
+import { ArrowLeftRight } from "lucide-react";
 import type { ConverterCardProps } from "./ConverterCard.types";
 
 export const ConverterCard = ({
@@ -6,38 +7,46 @@ export const ConverterCard = ({
   onGramChange,
   onAedChange,
 }: ConverterCardProps) => (
-  <div
-    className="rounded-xl p-5 flex justify-between items-center h-[145px]"
-    style={{ background: "rgba(239, 239, 239, 1)" }}
-  >
-    <div className="flex flex-col">
-      <label htmlFor="gram" className="text-xl font-medium mb-2 ">
-        GRAM
-      </label>
-      <input
-        id="gram"
-        type="number"
-        value={gram}
-        onChange={onGramChange}
-        placeholder="10 gm"
-        className="border-b-2 border-black bg-transparent text-base pb-1 w-28 font-medium text-gray-800 focus:outline-none focus:ring-0 focus:border-[#b8b7b5]"
-      />
-    </div>
-    <div className="text-2xl text-black cursor-pointer mt-5">&#8644;</div>
-    <div className="flex flex-col">
-      <label htmlFor="aed" className="text-xl font-medium mb-2">
-        AED
-      </label>
-      <input
-        id="aed"
-        type="number"
-        value={aed}
-        onChange={onAedChange}
-        placeholder="4000 AED"
-        // background: rgba(9, 16, 9, 0.59);
-        style={{ color: "rgba(9, 16, 9, 0.59);" }}
-        className="border-b-2 border-black bg-transparent text-base pb-1 w-28 font-medium text-gray-800 focus:outline-none focus:ring-0 focus:border-[#b8b7b5]"
-      />
+  <div className="bg-card-light dark:bg-card-dark p-6 rounded-2xl shadow-sm">
+    <div className="flex items-center justify-between space-x-4">
+      <div className="flex-1">
+        <label
+          className="block text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark"
+          htmlFor="gram"
+        >
+          GRAM
+        </label>
+        <input
+          className="w-full bg-transparent border-0 border-b-2 border-border-light dark:border-border-dark focus:ring-0 focus:outline-none focus:border-0 focus:border-b-0 p-2 text-2xl font-semibold text-text-primary-light dark:text-text-primary-dark"
+          id="gram"
+          placeholder="0.0"
+          type="text"
+          value={gram}
+          onChange={onGramChange}
+        />
+      </div>
+      <button
+        type="button"
+        className="flex-shrink-0 bg-white p-3 rounded-full mt-4 hover:opacity-80 transition-opacity focus:outline-none focus:ring-2 focus:ring-primary"
+      >
+        <ArrowLeftRight className="text-primary text-2xl" />
+      </button>
+      <div className="flex-1 text-right">
+        <label
+          className="block text-xs font-medium text-text-secondary-light dark:text-text-secondary-dark"
+          htmlFor="aed"
+        >
+          AED
+        </label>
+        <input
+          className="w-full bg-transparent border-0 border-b-2 border-border-light dark:border-border-dark focus:ring-0 focus:outline-none focus:border-0 focus:border-b-0 p-2 text-2xl font-semibold text-text-primary-light dark:text-text-primary-dark text-right"
+          id="aed"
+          placeholder="0.0"
+          type="text"
+          value={aed}
+          onChange={onAedChange}
+        />
+      </div>
     </div>
   </div>
 );
