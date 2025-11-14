@@ -1,281 +1,426 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>AIN Gold & Diamonds</title>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-    }
-    input::-webkit-outer-spin-button,
-    input::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-    input[type=number] {
-      -moz-appearance: textfield;
-    }
-    .scrollbar-hide::-webkit-scrollbar {
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AIN Gold & Diamonds</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap"
+    />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      body {
+        font-family: "Poppins", sans-serif;
+      }
+      input::-webkit-outer-spin-button,
+      input::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+      }
+      input[type="number"] {
+        -moz-appearance: textfield;
+      }
+      .scrollbar-hide::-webkit-scrollbar {
         display: none;
-    }
-    .scrollbar-hide {
+      }
+      .scrollbar-hide {
         -ms-overflow-style: none;
         scrollbar-width: none;
-    }
-  </style>
-</head>
-<body class="bg-white">
-  <div id="root"></div>
-  
-  <!-- IMPORT MAP - FIXED -->
-  <script type="importmap">
-{
-  "imports": {
-    "react": "https://esm.sh/react@18.3.1",
-    "react/jsx-runtime": "https://esm.sh/react@18.3.1/jsx-runtime",
-    "react-dom/client": "https://esm.sh/react-dom@18.3.1/client",
-    "lucide-react": "https://esm.sh/lucide-react@0.395.0",
-    "framer-motion": "https://esm.sh/framer-motion@11.2.10",
-    "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "react/": "https://aistudiocdn.com/react@^19.2.0/"
-  }
-}
-</script>
-  
-  <!-- YOUR APP CODE - INLINE -->
-  <script type="module">
-    import React, { useState } from 'react';
-    import { createRoot } from 'react-dom/client';
-    import { motion } from 'framer-motion';
-    import { Home, Briefcase, Store, Tag, User, ChevronDown, Filter, Plus, RefreshCw, DollarSign, Heart, ShoppingCart, Search } from 'lucide-react';
+      }
+    </style>
+  </head>
+  <body class="bg-white">
+    <div id="root"></div>
 
-    const GOLD_PRICE_PER_GRAM = 439.25;
+    YOUR APP CODE - INLINE
+    <script type="module">
+      import React, { useState } from "react";
+      import { createRoot } from "react-dom/client";
+      import { motion } from "framer-motion";
+      import {
+        Home,
+        Briefcase,
+        Store,
+        Tag,
+        User,
+        ChevronDown,
+        Filter,
+        Plus,
+        RefreshCw,
+        DollarSign,
+        Heart,
+        ShoppingCart,
+        Search,
+      } from "lucide-react";
 
-    // Data for the store page
-    const bestsellers = [
-      { id: 1, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAykhmEvcU0_J0V_ONXZCVESaBbB8BLxHBDsk_zFKNFKd8GrHA3NHOgX9VranOa7c8J77T4SDZHe9BzSn_lSSvS8yjl_sbY-y47vWDmEIBNr-40GXYcQT8AkpGnx4TRQHSTxTk0Jm0Qv6pWmUfPOo2v4EFDaRXnEYuLC1Oi9hFgpZzqteZ1E2kj165ou21SlRkJqymWYJSTy2h3SdEFzUEtNqqu8lqMleME4fg15b3p-DUt-ENeLOaomLblsmGJ7lJmyOpq1c5l1nQ", title: "Sovereign Gold Coin", details: "24k - 8gm", price: "1,720 AED" },
-      { id: 2, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYwWdUexGamsNdgTa6e-tmrgccO7UUmo_8qa7dCZga9HpADoSXIoHbhDICbfcsN3kZ460blDdqpSDisOPEBQXQsFY-7mFngeDyhtn78I8WVjoVPkDq_wxYL38nO4Nr0bGu5N5lwcldLJQT-fl29-DWnsH1U5_irJHMZ6KfYWpivfidVHTfbwtEtwKkQpFktkks4KW_WxnJ_O8TggH7K-TosHhhKv12cwvRHR2DP7qjOIJNF2Hzesl6fA5PDcUHzoKWVsEaWUebwU8", title: "10 Gram Gold Bar", details: "24k (99.9%)", price: "2,850 AED" },
-      { id: 3, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDspPncckgh99RpgLARxbuSURREYcabFwi0M1bhp46FFANmBKv-MzYH4tU6lnwKAuJvUaHAYVyxJV0q3y7CdyVYeLXOdX6VKwq-1eB_k47BL44RMCt0z0Xg2VpFeu9mlIcLvCmrrRk8XQQKMVzcCqQOui5mn4okqmCEYieCN2tX-9HFGBZ6wepmbH-VtPUzW6UQS4iIHmM1vmB31XwhruumtE_KIlkZXPdYzVH0OZ7VoYIDf-6b__5_nfKo7-BN8SSx6fGtLXhMMG0", title: "Teardrop Necklace", details: "22k - 4.5gm", price: "1,350 AED" },
-      { id: 4, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBPS5JxGLpqFk4MLlvDtLGPteSFVZcRI3L5NQZAPyOQuDlFkHTUZ7UiNuUPJCekJ8pH1ssLKPFuREqCpP3MktgGdY_MDLuHmRZ7FJ-tqyIk_Mumvca_Of_5dUIEf4fR84VpOoEsSGOvSlyXykviJjAK_157QTCtIdgXf9iUHX5fmDoP1Hh72wRkj2WVUmYcxk10WqpCFdkhdfIeS52YAK1EeVN-lC6aWxVKRIVkEThZSMY6-lNlSriFhHtdzr-SIGBq1jrhDYwcvQA", title: "Leaf Earrings", details: "22k - 3.2gm", price: "980 AED" },
-    ];
+      const GOLD_PRICE_PER_GRAM = 439.25;
 
-    const products = [
-        { id: 1, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBXyhB5AFMMb7191sMDXf0Z9X884XE7JSQqMFtHxq-QqzCFmE-ZfQqpqApPk2CTAwBR4uHHAjBkb23K9iwtpYkQ2QDk0zVcAbZOBEZAqHL5K6_R7J28J_kG-uEP_swxSF_o8MMcn01We7pdUHgkce3-JL-PwfJRQ6UvoLuks7hjhynMlumrmQkUhZ1U0tqprcB4m6Ia9lkQ8ZfVTEQ1_3DwqWrEEod6kTMoZ0Ti-Jr1YPZFdzjZeluYPbYCnYgJg2rHoCnsafyJYes", title: "DG 1 Gram Gold Mint Bar", details: "24k (99.9%)", price: "482.25 AED" },
-        { id: 2, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBM02SJZtve0dyC0lmrNpNJt0TyZIsCFTHIyNTHLbbgUlbqkU7si1dk1MzFctmdplpmfnIsGTtEmKwJ9Xfz1tpn7hKQQ1IcU47M3bYoNTQMV2wdMN7iMlNuNtLA5Rmj-raJghweXvStp7rkR6xHv4NHW-pyQqWxLxFItCK--AyYv4FpoUrCxm-b9u8b9gFaRk3afGUuuunDis-tBzUOAQWXjBbGM0qGFASfSTj7joFZcqclOJ4PARwDvnUFaZgH5bHclemnhr8aENQ", title: "DG 1 Gram Gold Mint Coin", details: "24k (99.9%)", price: "482.25 AED" },
-        { id: 3, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCBmk0q_eRV95xCmrUgPJxIfhT5a1olqmj-8NV9abCRPMvhUDvfQFzfgVN4f0P7_h7KPSL9vprnUtrkDhUYkB10EcSQomfawGV-wpYq6cpyuBCubSGd_80-X9cVemiis136SqjDU1yH2KzEYvzHg1jyngjigqJhD3snmQVeZ2j4bu1uMWvRzDS_si7ppC_01Aq_nKUumFaCosawVxlvOdAMJyxZewSh5T05iOwb-oXAlwGHib4k6I0WAU8IXX_LGzjXzj5lZ0XZvec", title: "Emerald chain", details: "22k - 7.5gm", price: "482.25 AED" },
-        { id: 4, img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCx0Rk19D8l_r6HAb9n9wQzeZkrr67xdPUspBm1pATWpKfsBehaLC6TQrobzwFGQfYkE44xbm6ZYdsIEHPcpNGIvmU5Z7aTqn0FoQuxr9KaapDwmMfNGWO0nZK4leV7hMi8tOnyPxGM9PX3vUb5EPixsY3RyxU-ZqeSo4xlBtIZRh3SnUvHOxXXRM1wkxP6s8PBuQiX4dZrrpp8LsrvYML7pNdD8zWHgqJKKii2LBEJDv9Ht4hsXtSSV6yfK6Lwo_gXhUMnAX_d08c", title: "Peacock Earrings", details: "22k - 7.5gm", price: "482.25 AED" },
-    ];
+      // Data for the store page
+      const bestsellers = [
+        {
+          id: 1,
+          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuAykhmEvcU0_J0V_ONXZCVESaBbB8BLxHBDsk_zFKNFKd8GrHA3NHOgX9VranOa7c8J77T4SDZHe9BzSn_lSSvS8yjl_sbY-y47vWDmEIBNr-40GXYcQT8AkpGnx4TRQHSTxTk0Jm0Qv6pWmUfPOo2v4EFDaRXnEYuLC1Oi9hFgpZzqteZ1E2kj165ou21SlRkJqymWYJSTy2h3SdEFzUEtNqqu8lqMleME4fg15b3p-DUt-ENeLOaomLblsmGJ7lJmyOpq1c5l1nQ",
+          title: "Sovereign Gold Coin",
+          details: "24k - 8gm",
+          price: "1,720 AED",
+        },
+        {
+          id: 2,
+          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBYwWdUexGamsNdgTa6e-tmrgccO7UUmo_8qa7dCZga9HpADoSXIoHbhDICbfcsN3kZ460blDdqpSDisOPEBQXQsFY-7mFngeDyhtn78I8WVjoVPkDq_wxYL38nO4Nr0bGu5N5lwcldLJQT-fl29-DWnsH1U5_irJHMZ6KfYWpivfidVHTfbwtEtwKkQpFktkks4KW_WxnJ_O8TggH7K-TosHhhKv12cwvRHR2DP7qjOIJNF2Hzesl6fA5PDcUHzoKWVsEaWUebwU8",
+          title: "10 Gram Gold Bar",
+          details: "24k (99.9%)",
+          price: "2,850 AED",
+        },
+        {
+          id: 3,
+          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuDspPncckgh99RpgLARxbuSURREYcabFwi0M1bhp46FFANmBKv-MzYH4tU6lnwKAuJvUaHAYVyxJV0q3y7CdyVYeLXOdX6VKwq-1eB_k47BL44RMCt0z0Xg2VpFeu9mlIcLvCmrrRk8XQQKMVzcCqQOui5mn4okqmCEYieCN2tX-9HFGBZ6wepmbH-VtPUzW6UQS4iIHmM1vmB31XwhruumtE_KIlkZXPdYzVH0OZ7VoYIDf-6b__5_nfKo7-BN8SSx6fGtLXhMMG0",
+          title: "Teardrop Necklace",
+          details: "22k - 4.5gm",
+          price: "1,350 AED",
+        },
+        {
+          id: 4,
+          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBPS5JxGLpqFk4MLlvDtLGPteSFVZcRI3L5NQZAPyOQuDlFkHTUZ7UiNuUPJCekJ8pH1ssLKPFuREqCpP3MktgGdY_MDLuHmRZ7FJ-tqyIk_Mumvca_Of_5dUIEf4fR84VpOoEsSGOvSlyXykviJjAK_157QTCtIdgXf9iUHX5fmDoP1Hh72wRkj2WVUmYcxk10WqpCFdkhdfIeS52YAK1EeVN-lC6aWxVKRIVkEThZSMY6-lNlSriFhHtdzr-SIGBq1jrhDYwcvQA",
+          title: "Leaf Earrings",
+          details: "22k - 3.2gm",
+          price: "980 AED",
+        },
+      ];
 
-    const App = () => {
-      const [activeTab, setActiveTab] = useState('Store');
-      console.log("activeTab",activeTab)
+      const products = [
+        {
+          id: 1,
+          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBXyhB5AFMMb7191sMDXf0Z9X884XE7JSQqMFtHxq-QqzCFmE-ZfQqpqApPk2CTAwBR4uHHAjBkb23K9iwtpYkQ2QDk0zVcAbZOBEZAqHL5K6_R7J28J_kG-uEP_swxSF_o8MMcn01We7pdUHgkce3-JL-PwfJRQ6UvoLuks7hjhynMlumrmQkUhZ1U0tqprcB4m6Ia9lkQ8ZfVTEQ1_3DwqWrEEod6kTMoZ0Ti-Jr1YPZFdzjZeluYPbYCnYgJg2rHoCnsafyJYes",
+          title: "DG 1 Gram Gold Mint Bar",
+          details: "24k (99.9%)",
+          price: "482.25 AED",
+        },
+        {
+          id: 2,
+          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuBM02SJZtve0dyC0lmrNpNJt0TyZIsCFTHIyNTHLbbgUlbqkU7si1dk1MzFctmdplpmfnIsGTtEmKwJ9Xfz1tpn7hKQQ1IcU47M3bYoNTQMV2wdMN7iMlNuNtLA5Rmj-raJghweXvStp7rkR6xHv4NHW-pyQqWxLxFItCK--AyYv4FpoUrCxm-b9u8b9gFaRk3afGUuuunDis-tBzUOAQWXjBbGM0qGFASfSTj7joFZcqclOJ4PARwDvnUFaZgH5bHclemnhr8aENQ",
+          title: "DG 1 Gram Gold Mint Coin",
+          details: "24k (99.9%)",
+          price: "482.25 AED",
+        },
+        {
+          id: 3,
+          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCBmk0q_eRV95xCmrUgPJxIfhT5a1olqmj-8NV9abCRPMvhUDvfQFzfgVN4f0P7_h7KPSL9vprnUtrkDhUYkB10EcSQomfawGV-wpYq6cpyuBCubSGd_80-X9cVemiis136SqjDU1yH2KzEYvzHg1jyngjigqJhD3snmQVeZ2j4bu1uMWvRzDS_si7ppC_01Aq_nKUumFaCosawVxlvOdAMJyxZewSh5T05iOwb-oXAlwGHib4k6I0WAU8IXX_LGzjXzj5lZ0XZvec",
+          title: "Emerald chain",
+          details: "22k - 7.5gm",
+          price: "482.25 AED",
+        },
+        {
+          id: 4,
+          img: "https://lh3.googleusercontent.com/aida-public/AB6AXuCx0Rk19D8l_r6HAb9n9wQzeZkrr67xdPUspBm1pATWpKfsBehaLC6TQrobzwFGQfYkE44xbm6ZYdsIEHPcpNGIvmU5Z7aTqn0FoQuxr9KaapDwmMfNGWO0nZK4leV7hMi8tOnyPxGM9PX3vUb5EPixsY3RyxU-ZqeSo4xlBtIZRh3SnUvHOxXXRM1wkxP6s8PBuQiX4dZrrpp8LsrvYML7pNdD8zWHgqJKKii2LBEJDv9Ht4hsXtSSV6yfK6Lwo_gXhUMnAX_d08c",
+          title: "Peacock Earrings",
+          details: "22k - 7.5gm",
+          price: "482.25 AED",
+        },
+      ];
 
-      return (
-        <div className="w-full max-w-sm mx-auto min-h-screen relative">
-          {activeTab === 'Home' && <HomePage />}
-          {activeTab === 'Portfolio' && <PortfolioPage />}
-          {activeTab === 'Store' && <StorePage />}
-          
-          <BottomNavBar activeTab={activeTab} setActiveTab={setActiveTab} />
-        </div>
-      );
-    };
+      const App = () => {
+        const [activeTab, setActiveTab] = useState("Store");
+        console.log("activeTab", activeTab);
 
-    const StorePage = () => {
-      const [activeCategory, setActiveCategory] = useState('All');
-      const categories = ['All', 'Gold Bars', 'Coins', 'Jewelry', 'Gifts'];
+        return (
+          <div className="w-full max-w-sm mx-auto min-h-screen relative">
+            {activeTab === "Home" && <HomePage />}
+            {activeTab === "Portfolio" && <PortfolioPage />}
+            {activeTab === "Store" && <StorePage />}
 
-      return (
-        <div className="pb-28">
+            <BottomNavBar activeTab={activeTab} setActiveTab={setActiveTab} />
+          </div>
+        );
+      };
+
+      const StorePage = () => {
+        const [activeCategory, setActiveCategory] = useState("All");
+        const categories = ["All", "Gold Bars", "Coins", "Jewelry", "Gifts"];
+
+        return (
+          <div className="pb-28">
             <header className="p-4 flex justify-between items-center bg-white">
-                <h1 className="text-3xl font-bold text-slate-900">Store</h1>
-                <div className="flex items-center space-x-4">
-                    <button className="text-slate-900">
-                        <Heart className="text-3xl" size={30} />
-                    </button>
-                    <button className="text-slate-900">
-                        <ShoppingCart className="text-3xl" size={30} />
-                    </button>
-                </div>
+              <h1 className="text-3xl font-bold text-slate-900">Store</h1>
+              <div className="flex items-center space-x-4">
+                <button className="text-slate-900">
+                  <Heart className="text-3xl" size={30} />
+                </button>
+                <button className="text-slate-900">
+                  <ShoppingCart className="text-3xl" size={30} />
+                </button>
+              </div>
             </header>
             <main className="px-4">
-                <div className="relative mb-6">
-                    <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" size={20} />
-                    <input className="w-full pl-10 pr-4 py-3 bg-gray-100 border-gray-200 rounded-lg text-slate-900 placeholder-gray-400 focus:ring-[#8A1538] focus:border-[#8A1538]" placeholder="Search" type="text"/>
+              <div className="relative mb-6">
+                <Search
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                  size={20}
+                />
+                <input
+                  className="w-full pl-10 pr-4 py-3 bg-gray-100 border-gray-200 rounded-lg text-slate-900 placeholder-gray-400 focus:ring-[#8A1538] focus:border-[#8A1538]"
+                  placeholder="Search"
+                  type="text"
+                />
+              </div>
+              <div className="mb-6">
+                <div className="flex space-x-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+                  {categories.map((cat) => (
+                    <button
+                      key={cat}
+                      onClick={() => setActiveCategory(cat)}
+                      className={`px-5 py-2.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors ${
+                        activeCategory === cat
+                          ? "bg-[#8A1538] text-white"
+                          : "bg-gray-100 text-slate-700"
+                      }`}
+                    >
+                      {cat}
+                    </button>
+                  ))}
                 </div>
-                <div className="mb-6">
-                    <div className="flex space-x-3 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-                         {categories.map(cat => (
-                            <button key={cat} onClick={() => setActiveCategory(cat)} className={`px-5 py-2.5 rounded-lg text-sm font-semibold whitespace-nowrap transition-colors ${activeCategory === cat ? 'bg-[#8A1538] text-white' : 'bg-gray-100 text-slate-700'}`}>
-                                {cat}
-                            </button>
-                        ))}
+              </div>
+              <section className="mb-8">
+                <h2 className="text-xl font-bold mb-4 text-slate-900">
+                  Bestsellers
+                </h2>
+                <div className="flex space-x-4 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
+                  {bestsellers.map((item) => (
+                    <div
+                      key={item.id}
+                      className="flex-shrink-0 w-36 bg-gray-100 rounded-lg p-3"
+                    >
+                      <img
+                        alt={item.title}
+                        className="w-full h-24 object-cover rounded mb-2"
+                        src={item.img}
+                      />
+                      <h3 className="text-sm font-medium text-slate-800 truncate">
+                        {item.title}
+                      </h3>
+                      <p className="text-xs text-gray-500">{item.details}</p>
+                      <p className="text-sm font-bold text-amber-500 mt-1">
+                        {item.price}
+                      </p>
                     </div>
+                  ))}
                 </div>
-                <section className="mb-8">
-                    <h2 className="text-xl font-bold mb-4 text-slate-900">Bestsellers</h2>
-                    <div className="flex space-x-4 overflow-x-auto pb-2 -mx-4 px-4 scrollbar-hide">
-                        {bestsellers.map(item => (
-                            <div key={item.id} className="flex-shrink-0 w-36 bg-gray-100 rounded-lg p-3">
-                                <img alt={item.title} className="w-full h-24 object-cover rounded mb-2" src={item.img}/>
-                                <h3 className="text-sm font-medium text-slate-800 truncate">{item.title}</h3>
-                                <p className="text-xs text-gray-500">{item.details}</p>
-                                <p className="text-sm font-bold text-amber-500 mt-1">{item.price}</p>
-                            </div>
-                        ))}
+              </section>
+              <div className="grid grid-cols-2 gap-4">
+                {products.map((item) => (
+                  <div key={item.id} className="bg-gray-100 rounded-lg p-3">
+                    <div className="bg-white rounded-lg mb-3">
+                      <img
+                        alt={item.title}
+                        className="w-full h-32 object-cover rounded-lg"
+                        src={item.img}
+                      />
                     </div>
-                </section>
-                <div className="grid grid-cols-2 gap-4">
-                    {products.map(item => (
-                        <div key={item.id} className="bg-gray-100 rounded-lg p-3">
-                            <div className="bg-white rounded-lg mb-3">
-                                <img alt={item.title} className="w-full h-32 object-cover rounded-lg" src={item.img}/>
-                            </div>
-                            <h3 className="font-medium text-slate-800">{item.title}</h3>
-                            <p className="text-sm text-gray-500">{item.details}</p>
-                            <p className="font-bold text-amber-500 mt-1">{item.price}</p>
-                        </div>
-                    ))}
-                </div>
+                    <h3 className="font-medium text-slate-800">{item.title}</h3>
+                    <p className="text-sm text-gray-500">{item.details}</p>
+                    <p className="font-bold text-amber-500 mt-1">
+                      {item.price}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </main>
-        </div>
-      );
-    }
-
-    const HomePage = () => {
-      const [activeToggle, setActiveToggle] = useState('buy');
-      const [gram, setGram] = useState('10');
-      const [aed, setAed] = useState((10 * GOLD_PRICE_PER_GRAM).toFixed(2));
-
-      const handleGramChange = (e) => {
-        const value = e.target.value;
-        setGram(value);
-        if (value === '' || isNaN(parseFloat(value)) || parseFloat(value) < 0) {
-          setAed('');
-        } else {
-          setAed((parseFloat(value) * GOLD_PRICE_PER_GRAM).toFixed(2));
-        }
-      };
-
-      const handleAedChange = (e) => {
-        const value = e.target.value;
-        setAed(value);
-        if (value === '' || isNaN(parseFloat(value)) || parseFloat(value) < 0) {
-          setGram('');
-        } else {
-          setGram((parseFloat(value) / GOLD_PRICE_PER_GRAM).toFixed(4));
-        }
-      };
-
-      return (
-        <div className="p-4 flex flex-col gap-6">
-          <GenericHeader />
-          <PromoCard />
-          <PaginationDots />
-          <PriceCards />
-          <TransactionSection activeToggle={activeToggle} setActiveToggle={setActiveToggle} />
-          <ConverterCard 
-            gram={gram}
-            aed={aed}
-            onGramChange={handleGramChange}
-            onAedChange={handleAedChange}
-          />
-          <button className="w-full py-4 bg-[#8A1538] text-white border-none rounded-xl text-lg font-semibold cursor-pointer mt-4 hover:bg-[#8A1538]/90 transition-colors">
-            {activeToggle === 'buy' ? 'Buy' : 'Sell'}
-          </button>
-        </div>
-      );
-    };
-
-    const PortfolioPage = () => {
-      return (
-        <div className="p-4 flex flex-col gap-6">
-          <header className="py-2">
-            <h1 className="text-2xl font-bold tracking-wider">PORTFOLIO</h1>
-          </header>
-          <WalletBalanceCard />
-          <TransactionList />
-        </div>
-      );
-    };
-
-    const WalletBalanceCard = () => (
-      <div 
-        className="rounded-2xl p-6 text-white flex flex-col gap-4 relative overflow-hidden"
-        style={{
-          backgroundColor: '#8A1538',
-          backgroundImage: 'repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 10px)'
-        }}
-      >
-        <div className="border border-white/30 rounded-xl p-1 absolute inset-2"></div>
-        <div className="z-10">
-          <p className="text-sm text-white/80">Your Wallet Balance</p>
-          <p className="text-3xl font-semibold mt-1">25400 AED</p>
-        </div>
-        <div className="z-10 flex items-center gap-4">
-          <button className="flex-1 py-2.5 bg-transparent border border-white/80 rounded-lg text-sm font-semibold hover:bg-white/10 transition-colors">Buy</button>
-          <button className="flex-1 py-2.5 bg-white text-[#8A1538] rounded-lg text-sm font-semibold flex items-center justify-center gap-1.5 hover:bg-gray-100 transition-colors">
-            <Plus size={16} strokeWidth={3} />
-            Deposit
-          </button>
-        </div>
-      </div>
-    );
-
-    const transactions = [
-      { type: 'Purchased', date: '01 nov - 5:58 pm', gm: '+10 gm', aed: '-4800 AED', status: 'credit' },
-      { type: 'Sold', date: '01 nov - 5:58 pm', gm: '+10 gm', aed: '-4800 AED', status: 'debit' },
-      { type: 'Purchased', date: '01 nov - 5:58 pm', gm: '+10 gm', aed: '-4800 AED', status: 'credit' },
-      { type: 'Sold', date: '01 nov - 5:58 pm', gm: '+10 gm', aed: '-4800 AED', status: 'debit' },
-    ];
-
-    const TransactionList = () => (
-      <div>
-        <div className="flex justify-between items-center mb-4">
-          <div className="flex items-center gap-2">
-            <h2 className="text-lg font-bold text-gray-800">Transactions</h2>
-            <ChevronDown size={20} className="text-gray-600" />
           </div>
-          <Filter size={20} className="text-gray-600" />
+        );
+      };
+
+      const HomePage = () => {
+        const [activeToggle, setActiveToggle] = useState("buy");
+        const [gram, setGram] = useState("10");
+        const [aed, setAed] = useState((10 * GOLD_PRICE_PER_GRAM).toFixed(2));
+
+        const handleGramChange = (e) => {
+          const value = e.target.value;
+          setGram(value);
+          if (
+            value === "" ||
+            isNaN(parseFloat(value)) ||
+            parseFloat(value) < 0
+          ) {
+            setAed("");
+          } else {
+            setAed((parseFloat(value) * GOLD_PRICE_PER_GRAM).toFixed(2));
+          }
+        };
+
+        const handleAedChange = (e) => {
+          const value = e.target.value;
+          setAed(value);
+          if (
+            value === "" ||
+            isNaN(parseFloat(value)) ||
+            parseFloat(value) < 0
+          ) {
+            setGram("");
+          } else {
+            setGram((parseFloat(value) / GOLD_PRICE_PER_GRAM).toFixed(4));
+          }
+        };
+
+        return (
+          <div className="p-4 flex flex-col gap-6">
+            <GenericHeader />
+            <PromoCard />
+            <PaginationDots />
+            <PriceCards />
+            <TransactionSection
+              activeToggle={activeToggle}
+              setActiveToggle={setActiveToggle}
+            />
+            <ConverterCard
+              gram={gram}
+              aed={aed}
+              onGramChange={handleGramChange}
+              onAedChange={handleAedChange}
+            />
+            <button className="w-full py-4 bg-[#8A1538] text-white border-none rounded-xl text-lg font-semibold cursor-pointer mt-4 hover:bg-[#8A1538]/90 transition-colors">
+              {activeToggle === "buy" ? "Buy" : "Sell"}
+            </button>
+          </div>
+        );
+      };
+
+      const PortfolioPage = () => {
+        return (
+          <div className="p-4 flex flex-col gap-6">
+            <header className="py-2">
+              <h1 className="text-2xl font-bold tracking-wider">PORTFOLIO</h1>
+            </header>
+            <WalletBalanceCard />
+            <TransactionList />
+          </div>
+        );
+      };
+
+      const WalletBalanceCard = () => (
+        <div
+          className="rounded-2xl p-6 text-white flex flex-col gap-4 relative overflow-hidden"
+          style={{
+            backgroundColor: "#8A1538",
+            backgroundImage:
+              "repeating-linear-gradient(45deg, rgba(255,255,255,0.05) 0, rgba(255,255,255,0.05) 2px, transparent 2px, transparent 10px)",
+          }}
+        >
+          <div className="border border-white/30 rounded-xl p-1 absolute inset-2"></div>
+          <div className="z-10">
+            <p className="text-sm text-white/80">Your Wallet Balance</p>
+            <p className="text-3xl font-semibold mt-1">25400 AED</p>
+          </div>
+          <div className="z-10 flex items-center gap-4">
+            <button className="flex-1 py-2.5 bg-transparent border border-white/80 rounded-lg text-sm font-semibold hover:bg-white/10 transition-colors">
+              Buy
+            </button>
+            <button className="flex-1 py-2.5 bg-white text-[#8A1538] rounded-lg text-sm font-semibold flex items-center justify-center gap-1.5 hover:bg-gray-100 transition-colors">
+              <Plus size={16} strokeWidth={3} />
+              Deposit
+            </button>
+          </div>
         </div>
-        <div className="flex flex-col gap-4">
-          {transactions.map((tx, index) => (
-            <div key={index} className="flex items-center justify-between">
-              <div className="flex items-center gap-4">
-                <div className={`w-10 h-10 rounded-full flex items-center justify-center ${tx.status === 'credit' ? 'bg-green-100 text-green-600' : 'bg-red-100 text-red-600'}`}>
-                  <div className="relative">
-                    <RefreshCw size={20}/>
-                    <DollarSign size={10} className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+      );
+
+      const transactions = [
+        {
+          type: "Purchased",
+          date: "01 nov - 5:58 pm",
+          gm: "+10 gm",
+          aed: "-4800 AED",
+          status: "credit",
+        },
+        {
+          type: "Sold",
+          date: "01 nov - 5:58 pm",
+          gm: "+10 gm",
+          aed: "-4800 AED",
+          status: "debit",
+        },
+        {
+          type: "Purchased",
+          date: "01 nov - 5:58 pm",
+          gm: "+10 gm",
+          aed: "-4800 AED",
+          status: "credit",
+        },
+        {
+          type: "Sold",
+          date: "01 nov - 5:58 pm",
+          gm: "+10 gm",
+          aed: "-4800 AED",
+          status: "debit",
+        },
+      ];
+
+      const TransactionList = () => (
+        <div>
+          <div className="flex justify-between items-center mb-4">
+            <div className="flex items-center gap-2">
+              <h2 className="text-lg font-bold text-gray-800">Transactions</h2>
+              <ChevronDown size={20} className="text-gray-600" />
+            </div>
+            <Filter size={20} className="text-gray-600" />
+          </div>
+          <div className="flex flex-col gap-4">
+            {transactions.map((tx, index) => (
+              <div key={index} className="flex items-center justify-between">
+                <div className="flex items-center gap-4">
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                      tx.status === "credit"
+                        ? "bg-green-100 text-green-600"
+                        : "bg-red-100 text-red-600"
+                    }`}
+                  >
+                    <div className="relative">
+                      <RefreshCw size={20} />
+                      <DollarSign
+                        size={10}
+                        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <p className="font-semibold text-gray-900">{tx.type}</p>
+                    <p className="text-xs text-gray-500">{tx.date}</p>
                   </div>
                 </div>
-                <div>
-                  <p className="font-semibold text-gray-900">{tx.type}</p>
-                  <p className="text-xs text-gray-500">{tx.date}</p>
+                <div className="text-right">
+                  <p className="font-semibold text-gray-900">{tx.gm}</p>
+                  <p className="text-xs text-gray-500">{tx.aed}</p>
                 </div>
               </div>
-              <div className="text-right">
-                <p className="font-semibold text-gray-900">{tx.gm}</p>
-                <p className="text-xs text-gray-500">{tx.aed}</p>
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    );
+      );
 
-    const GenericHeader = () => (
-       <header className="flex justify-between items-center py-2">
+      const GenericHeader = () => (
+        <header className="flex justify-between items-center py-2">
           <div className="flex items-end">
-            <svg width="40" height="30" viewBox="0 0 40 30" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M11.536 0L23.072 15L11.536 30H0L11.536 15L0 0H11.536Z" fill="#F1B93B"/>
-              <path d="M23.072 15L11.536 0H21.536L33.072 15L21.536 30H11.536L23.072 15Z" fill="#F8D479"/>
+            <svg
+              width="40"
+              height="30"
+              viewBox="0 0 40 30"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M11.536 0L23.072 15L11.536 30H0L11.536 15L0 0H11.536Z"
+                fill="#F1B93B"
+              />
+              <path
+                d="M23.072 15L11.536 0H21.536L33.072 15L21.536 30H11.536L23.072 15Z"
+                fill="#F8D479"
+              />
             </svg>
             <div className="flex flex-col ml-2 leading-none">
               <span className="text-2xl font-bold tracking-[2px]">AIN</span>
-              <span className="text-[8px] text-gray-400 tracking-[0.5px]">GOLD & DIAMONDS</span>
+              <span className="text-[8px] text-gray-400 tracking-[0.5px]">
+                GOLD & DIAMONDS
+              </span>
             </div>
           </div>
           <div className="flex flex-col justify-between w-6 h-[18px] cursor-pointer space-y-1">
@@ -284,142 +429,219 @@
             <span className="block h-[3px] w-full bg-black rounded-sm"></span>
           </div>
         </header>
-    );
+      );
 
-    const PromoCard = () => (
-      <div className="bg-gradient-to-r from-[#B46556] to-[#D58D6D] rounded-2xl p-6 text-white flex items-center justify-between overflow-hidden">
-        <div className="z-10">
-          <h2 className="text-2xl font-semibold mb-2">Refer and Earn</h2>
-          <p className="text-sm max-w-[180px] leading-snug">Refer a friend and Earn XP points worth of 20 AED for each referral</p>
-        </div>
-        <div className="relative w-28 h-28 -mr-10">
-          <img src="https://i.imgur.com/8qkX6n6.png" alt="Phone with coins" className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180px] max-w-none"/>
-        </div>
-      </div>
-    );
-
-    const PaginationDots = () => (
-      <div className="flex justify-center items-center gap-2 -mt-4">
-        <div className="w-2.5 h-2.5 rounded-full bg-[#F1B93B]"></div>
-        <div className="w-2.5 h-2.5 rounded-full bg-gray-200"></div>
-        <div className="w-2.5 h-2.5 rounded-full bg-gray-200"></div>
-      </div>
-    );
-
-    const PriceCards = () => (
-      <div className="grid grid-cols-2 gap-4">
-        <div className="bg-[#F1B93B] text-black rounded-xl p-4">
-          <div className="flex justify-between items-center mb-2">
-            <h3 className="text-sm font-medium">Gold/gm</h3>
-            <div className="w-5 h-5 rounded-full bg-black/10 flex justify-center items-center font-bold cursor-pointer">+</div>
+      const PromoCard = () => (
+        <div className="bg-gradient-to-r from-[#B46556] to-[#D58D6D] rounded-2xl p-6 text-white flex items-center justify-between overflow-hidden">
+          <div className="z-10">
+            <h2 className="text-2xl font-semibold mb-2">Refer and Earn</h2>
+            <p className="text-sm max-w-[180px] leading-snug">
+              Refer a friend and Earn XP points worth of 20 AED for each
+              referral
+            </p>
           </div>
-          <p className="text-xl font-bold mb-1">439.25 AED</p>
-          <div className="flex items-center text-sm font-medium text-red-600">
-            <span>-0.07%</span>
-            <span className="ml-1">▼</span>
+          <div className="relative w-28 h-28 -mr-10">
+            <img
+              src="https://i.imgur.com/8qkX6n6.png"
+              alt="Phone with coins"
+              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[180px] max-w-none"
+            />
           </div>
         </div>
-        <div className="bg-gray-100 text-gray-800 rounded-xl p-4">
-          <div className="flex justify-between items-center mb-2">
-            <h3 className="text-sm font-medium">Silver/gm</h3>
-            <div className="w-5 h-5 rounded-full bg-black/10 flex justify-center items-center font-bold cursor-pointer">+</div>
-          </div>
-          <p className="text-xl font-bold mb-1">5.20 AED</p>
-          <div className="flex items-center text-sm font-medium text-green-600">
-            <span>-0.07%</span>
-            <span className="ml-1">▲</span>
-          </div>
-        </div>
-      </div>
-    );
+      );
 
-    const TransactionSection = ({ activeToggle, setActiveToggle }) => (
-      <div className="flex justify-between items-center">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 rounded-full bg-[#F1B93B] flex justify-center items-center text-white">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
-          </div>
-          <div>
-            <h4 className="text-sm font-semibold tracking-wide text-gray-800">BUYING PRICE</h4>
-            <p className="text-base font-bold">24K</p>
-          </div>
+      const PaginationDots = () => (
+        <div className="flex justify-center items-center gap-2 -mt-4">
+          <div className="w-2.5 h-2.5 rounded-full bg-[#F1B93B]"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-gray-200"></div>
+          <div className="w-2.5 h-2.5 rounded-full bg-gray-200"></div>
         </div>
-        <div className="flex bg-gray-100 rounded-full p-1">
-          <button 
-            className={`px-6 py-2 rounded-full text-sm font-semibold transition-colors ${activeToggle === 'buy' ? 'bg-[#8A1538] text-white' : 'text-gray-500'}`}
-            onClick={() => setActiveToggle('buy')}
-          >
-            Buy
-          </button>
-          <button 
-            className={`px-6 py-2 rounded-full text-sm font-semibold transition-colors ${activeToggle === 'sell' ? 'bg-[#8A1538] text-white' : 'text-gray-500'}`}
-            onClick={() => setActiveToggle('sell')}
-          >
-            Sell
-          </button>
-        </div>
-      </div>
-    );
+      );
 
-    const ConverterCard = ({ gram, aed, onGramChange, onAedChange }) => (
-      <div className="bg-gray-50 rounded-xl p-5 flex justify-between items-center">
-        <div className="flex flex-col">
-          <label htmlFor="gram" className="text-xs text-gray-500 mb-2">GRAM</label>
-          <input id="gram" type="number" value={gram} onChange={onGramChange} placeholder="10 gm" className="border-none border-b-2 border-gray-200 bg-transparent text-base pb-1 w-28 font-medium text-gray-800 focus:outline-none focus:ring-0 focus:border-[#F1B93B]"/>
+      const PriceCards = () => (
+        <div className="grid grid-cols-2 gap-4">
+          <div className="bg-[#F1B93B] text-black rounded-xl p-4">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-sm font-medium">Gold/gm</h3>
+              <div className="w-5 h-5 rounded-full bg-black/10 flex justify-center items-center font-bold cursor-pointer">
+                +
+              </div>
+            </div>
+            <p className="text-xl font-bold mb-1">439.25 AED</p>
+            <div className="flex items-center text-sm font-medium text-red-600">
+              <span>-0.07%</span>
+              <span className="ml-1">▼</span>
+            </div>
+          </div>
+          <div className="bg-gray-100 text-gray-800 rounded-xl p-4">
+            <div className="flex justify-between items-center mb-2">
+              <h3 className="text-sm font-medium">Silver/gm</h3>
+              <div className="w-5 h-5 rounded-full bg-black/10 flex justify-center items-center font-bold cursor-pointer">
+                +
+              </div>
+            </div>
+            <p className="text-xl font-bold mb-1">5.20 AED</p>
+            <div className="flex items-center text-sm font-medium text-green-600">
+              <span>-0.07%</span>
+              <span className="ml-1">▲</span>
+            </div>
+          </div>
         </div>
-        <div className="text-2xl text-gray-600 cursor-pointer mt-5">
-          &#8644;
-        </div>
-        <div className="flex flex-col">
-          <label htmlFor="aed" className="text-xs text-gray-500 mb-2">AED</label>
-          <input id="aed" type="number" value={aed} onChange={onAedChange} placeholder="4000 AED" className="border-none border-b-2 border-gray-200 bg-transparent text-base pb-1 w-28 font-medium text-gray-800 focus:outline-none focus:ring-0 focus:border-[#F1B93B]"/>
-        </div>
-      </div>
-    );
+      );
 
-    const BottomNavBar = ({ activeTab, setActiveTab }) => {
+      const TransactionSection = ({ activeToggle, setActiveToggle }) => (
+        <div className="flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 rounded-full bg-[#F1B93B] flex justify-center items-center text-white">
+              <svg
+                width="18"
+                height="18"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              >
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+            </div>
+            <div>
+              <h4 className="text-sm font-semibold tracking-wide text-gray-800">
+                BUYING PRICE
+              </h4>
+              <p className="text-base font-bold">24K</p>
+            </div>
+          </div>
+          <div className="flex bg-gray-100 rounded-full p-1">
+            <button
+              className={`px-6 py-2 rounded-full text-sm font-semibold transition-colors ${
+                activeToggle === "buy"
+                  ? "bg-[#8A1538] text-white"
+                  : "text-gray-500"
+              }`}
+              onClick={() => setActiveToggle("buy")}
+            >
+              Buy
+            </button>
+            <button
+              className={`px-6 py-2 rounded-full text-sm font-semibold transition-colors ${
+                activeToggle === "sell"
+                  ? "bg-[#8A1538] text-white"
+                  : "text-gray-500"
+              }`}
+              onClick={() => setActiveToggle("sell")}
+            >
+              Sell
+            </button>
+          </div>
+        </div>
+      );
+
+      const ConverterCard = ({ gram, aed, onGramChange, onAedChange }) => (
+        <div className="bg-gray-50 rounded-xl p-5 flex justify-between items-center">
+          <div className="flex flex-col">
+            <label htmlFor="gram" className="text-xs text-gray-500 mb-2">
+              GRAM
+            </label>
+            <input
+              id="gram"
+              type="number"
+              value={gram}
+              onChange={onGramChange}
+              placeholder="10 gm"
+              className="border-none border-b-2 border-gray-200 bg-transparent text-base pb-1 w-28 font-medium text-gray-800 focus:outline-none focus:ring-0 focus:border-[#F1B93B]"
+            />
+          </div>
+          <div className="text-2xl text-gray-600 cursor-pointer mt-5">
+            &#8644;
+          </div>
+          <div className="flex flex-col">
+            <label htmlFor="aed" className="text-xs text-gray-500 mb-2">
+              AED
+            </label>
+            <input
+              id="aed"
+              type="number"
+              value={aed}
+              onChange={onAedChange}
+              placeholder="4000 AED"
+              className="border-none border-b-2 border-gray-200 bg-transparent text-base pb-1 w-28 font-medium text-gray-800 focus:outline-none focus:ring-0 focus:border-[#F1B93B]"
+            />
+          </div>
+        </div>
+      );
+
+      const BottomNavBar = ({ activeTab, setActiveTab }) => {
         const navItems = [
-            { name: 'Home', icon: Home },
-            { name: 'Portfolio', icon: Briefcase },
-            { name: 'Store', icon: Store },
-            { name: 'My Plans', icon: Tag },
-            { name: 'Profile', icon: User },
+          { name: "Home", icon: Home },
+          { name: "Portfolio", icon: Briefcase },
+          { name: "Store", icon: Store },
+          { name: "My Plans", icon: Tag },
+          { name: "Profile", icon: User },
         ];
 
         return (
-            <nav className="fixed bottom-0 left-0 right-0 w-full max-w-sm mx-auto p-3">
-                <div className="bg-[#8A1538]/95 backdrop-blur-sm rounded-full flex justify-around items-center h-16 shadow-lg">
-                    {navItems.map((item) => {
-                        const isActive = activeTab === item.name;
-                        // Special style for the middle 'Store' button
-                        if (item.name === 'Store') {
-                            return (
-                                <a key={item.name} href="#" onClick={(e) => { e.preventDefault(); setActiveTab(item.name); }} className={`flex flex-col items-center text-white transition-transform transform ${isActive ? 'scale-110 -translate-y-1' : ''}`}>
-                                    <div className="bg-white rounded-full p-2 mb-1 shadow-md">
-                                        <item.icon className="text-[#8A1538]" size={22} />
-                                    </div>
-                                    <span className={`text-xs mt-1 font-semibold ${isActive ? 'text-white' : 'text-transparent'}`}>{item.name}</span>
-                                </a>
-                            );
-                        }
-                        // Default style for other buttons
-                        return (
-                             <a key={item.name} href="#" onClick={(e) => { e.preventDefault(); setActiveTab(item.name); }} className={`flex flex-col items-center transition-colors ${isActive ? 'text-white' : 'text-white/70'} hover:text-white`}>
-                                <item.icon size={24} />
-                                <span className="text-xs mt-1">{item.name}</span>
-                            </a>
-                        );
-                    })}
-                </div>
-            </nav>
+          <nav className="fixed bottom-0 left-0 right-0 w-full max-w-sm mx-auto p-3">
+            <div className="bg-[#8A1538]/95 backdrop-blur-sm rounded-full flex justify-around items-center h-16 shadow-lg">
+              {navItems.map((item) => {
+                const isActive = activeTab === item.name;
+                // Special style for the middle 'Store' button
+                if (item.name === "Store") {
+                  return (
+                    <a
+                      key={item.name}
+                      href="#"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setActiveTab(item.name);
+                      }}
+                      className={`flex flex-col items-center text-white transition-transform transform ${
+                        isActive ? "scale-110 -translate-y-1" : ""
+                      }`}
+                    >
+                      <div className="bg-white rounded-full p-2 mb-1 shadow-md">
+                        <item.icon className="text-[#8A1538]" size={22} />
+                      </div>
+                      <span
+                        className={`text-xs mt-1 font-semibold ${
+                          isActive ? "text-white" : "text-transparent"
+                        }`}
+                      >
+                        {item.name}
+                      </span>
+                    </a>
+                  );
+                }
+                // Default style for other buttons
+                return (
+                  <a
+                    key={item.name}
+                    href="#"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setActiveTab(item.name);
+                    }}
+                    className={`flex flex-col items-center transition-colors ${
+                      isActive ? "text-white" : "text-white/70"
+                    } hover:text-white`}
+                  >
+                    <item.icon size={24} />
+                    <span className="text-xs mt-1">{item.name}</span>
+                  </a>
+                );
+              })}
+            </div>
+          </nav>
         );
-    };
+      };
 
-
-    // Mount the app
-    const container = document.getElementById('root');
-    const root = createRoot(container);
-    root.render(<App />);
-  </script>
-</body>
+      // Mount the app
+      const container = document.getElementById("root");
+      const root = createRoot(container);
+      root.render(<App />);
+    </script>
+  </body>
 </html>
