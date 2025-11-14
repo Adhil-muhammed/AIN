@@ -1,7 +1,7 @@
 import AINLogo from "@/assets/svg/AIN-log.svg";
 
 export const GenericHeader = () => (
-  <header className="flex justify-between items-center py-2">
+  <header className="fixed top-0 left-0 right-0 w-full max-w-sm mx-auto z-40 bg-white flex justify-between items-center py-2 px-4">
     <div className="flex items-end">
       {/* <IconButton icon={AINLogo} alt="logo" /> */}
       <img src={AINLogo} alt="logo" className="w-[128px] h-[40px]" />

@@ -23,7 +23,11 @@ export const BottomNavBar = () => {
     >
       <motion.div
         initial={false}
-        className="bg-gradient-to-t from-[#8A1538]/98 to-[#8A1538]/95 backdrop-blur-xl rounded-2xl flex justify-around items-center h-14 shadow-2xl border border-white/10 relative overflow-hidden"
+        className="backdrop-blur-xl rounded-2xl flex justify-around items-center h-14 shadow-2xl border border-white/10 relative overflow-hidden"
+        style={{
+          background:
+            "linear-gradient(to top, rgba(138, 21, 56, 0.98), rgba(138, 21, 56, 0.95))",
+        }}
       >
         {/* Animated background glow effect */}
         <motion.div
