@@ -1,5 +1,5 @@
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useRef } from "react";
+import { motion, useInView } from "framer-motion";
 import DGGramGoldMint from "@/assets/svg/homePage/DG-Gram-Gold-Mint.svg";
 import EmeraldChain from "@/assets/svg/homePage/Emerald-chain.svg";
 import GoldenEarrings from "@/assets/svg/homePage/Golden-earrings.svg";
@@ -22,8 +22,8 @@ const itemVariants = {
     opacity: 1,
     y: 0,
     transition: {
-      duration: 0.5,
-      ease: "easeOut",
+      duration: 0.6,
+      ease: [0.22, 1, 0.36, 1], // Custom easing for smooth feel
     },
   },
 };
@@ -35,10 +35,36 @@ const gridItemVariants = {
     y: 0,
     scale: 1,
     transition: {
-      duration: 0.4,
-      ease: "easeOut",
+      duration: 0.5,
+      ease: [0.22, 1, 0.36, 1],
     },
   },
+};
+
+// Scroll-triggered animation component
+const ScrollReveal: React.FC<{
+  children: React.ReactNode;
+  className?: string;
+  delay?: number;
+}> = ({ children, className = "", delay = 0 }) => {
+  const ref = useRef(null);
+  const isInView = useInView(ref, { once: true, margin: "-100px" });
+
+  return (
+    <motion.div
+      ref={ref}
+      className={className}
+      initial={{ opacity: 0, y: 40 }}
+      animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+      transition={{
+        duration: 0.6,
+        delay,
+        ease: [0.22, 1, 0.36, 1],
+      }}
+    >
+      {children}
+    </motion.div>
+  );
 };
 
 export const HomeProduct: React.FC = () => {
@@ -67,24 +93,34 @@ export const HomeProduct: React.FC = () => {
             </p>
             <p className="text-sm text-[#6b7280]">3245 AED</p>
           </div>
-          <button className="bg-[#8c1d40] text-white flex items-center justify-center px-4 py-2 rounded-md font-medium text-sm hover:opacity-90 transition-opacity">
+          <motion.button
+            className="bg-[#8c1d40] text-white flex items-center justify-center px-4 py-2 rounded-md font-medium text-sm"
+            whileTap={{ scale: 0.95 }}
+            whileHover={{ opacity: 0.9 }}
+            transition={{ type: "spring", stiffness: 400, damping: 17 }}
+          >
             <span className="material-icons-outlined text-base mr-1.5">
               add_circle_outline
             </span>
             Deposit
-          </button>
+          </motion.button>
         </div>
       </motion.div>
 
       {/* Coin & Bars Section */}
-      <motion.div className="mb-8" variants={itemVariants}>
+      <ScrollReveal className="mb-8">
         <h2 className="text-xl font-bold mb-4 text-[#1f2937]">Coin & Bars</h2>
         <div className="grid grid-cols-2 gap-4">
           <motion.div
             className="bg-[#fdf8f6] rounded-lg overflow-hidden flex flex-col shadow-sm"
             variants={gridItemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, y: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <img
               alt="A 1 gram gold mint bar"
@@ -95,16 +131,26 @@ export const HomeProduct: React.FC = () => {
               <h3 className="text-sm font-medium text-[#1f2937] flex-grow">
                 DG 1 Gram Gold Mint Bar 24k (99.9%)
               </h3>
-              <button className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md hover:opacity-90 transition-opacity">
+              <motion.button
+                className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md"
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ opacity: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 View Product
-              </button>
+              </motion.button>
             </div>
           </motion.div>
           <motion.div
             className="bg-[#fdf8f6] rounded-lg overflow-hidden flex flex-col shadow-sm"
             variants={gridItemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, y: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <img
               alt="A 1 gram gold mint bar"
@@ -115,16 +161,26 @@ export const HomeProduct: React.FC = () => {
               <h3 className="text-sm font-medium text-[#1f2937] flex-grow">
                 DG 1 Gram Gold Mint Bar 24k (99.9%)
               </h3>
-              <button className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md hover:opacity-90 transition-opacity">
+              <motion.button
+                className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md"
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ opacity: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 View Product
-              </button>
+              </motion.button>
             </div>
           </motion.div>
           <motion.div
             className="bg-[#fdf8f6] rounded-lg overflow-hidden flex flex-col shadow-sm"
             variants={gridItemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, y: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <img
               alt="A 2 gram gold coin"
@@ -135,16 +191,26 @@ export const HomeProduct: React.FC = () => {
               <h3 className="text-sm font-medium text-[#1f2937] flex-grow">
                 DG 2 Gram Gold Coin 24k (99.9%)
               </h3>
-              <button className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md hover:opacity-90 transition-opacity">
+              <motion.button
+                className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md"
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ opacity: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 View Product
-              </button>
+              </motion.button>
             </div>
           </motion.div>
           <motion.div
             className="bg-[#fdf8f6] rounded-lg overflow-hidden flex flex-col shadow-sm"
             variants={gridItemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, y: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <img
               alt="A 2 gram gold coin"
@@ -155,23 +221,33 @@ export const HomeProduct: React.FC = () => {
               <h3 className="text-sm font-medium text-[#1f2937] flex-grow">
                 DG 2 Gram Gold Coin 24k (99.9%)
               </h3>
-              <button className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md hover:opacity-90 transition-opacity">
+              <motion.button
+                className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md"
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ opacity: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 View Product
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         </div>
-      </motion.div>
+      </ScrollReveal>
 
       {/* Jewellery Section */}
-      <motion.div className="mb-8" variants={itemVariants}>
+      <ScrollReveal className="mb-8" delay={0.1}>
         <h2 className="text-xl font-bold mb-4 text-[#1f2937]">Jewellery</h2>
         <div className="grid grid-cols-2 gap-4">
           <motion.div
             className="bg-[#fdf8f6] rounded-lg overflow-hidden flex flex-col shadow-sm"
             variants={gridItemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, y: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <img
               alt="A pair of golden earrings"
@@ -183,16 +259,26 @@ export const HomeProduct: React.FC = () => {
                 Golden earrings
               </h3>
               <p className="text-xs text-[#6b7280] flex-grow">22k - 8gm</p>
-              <button className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md hover:opacity-90 transition-opacity">
+              <motion.button
+                className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md"
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ opacity: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 View Product
-              </button>
+              </motion.button>
             </div>
           </motion.div>
           <motion.div
             className="bg-[#fdf8f6] rounded-lg overflow-hidden flex flex-col shadow-sm"
             variants={gridItemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, y: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <img
               alt="A pair of peacock design earrings"
@@ -204,16 +290,26 @@ export const HomeProduct: React.FC = () => {
                 Peacock Earrings
               </h3>
               <p className="text-xs text-[#6b7280] flex-grow">22k - 7.5gm</p>
-              <button className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md hover:opacity-90 transition-opacity">
+              <motion.button
+                className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md"
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ opacity: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 View Product
-              </button>
+              </motion.button>
             </div>
           </motion.div>
           <motion.div
             className="bg-[#fdf8f6] rounded-lg overflow-hidden flex flex-col shadow-sm"
             variants={gridItemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, y: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <img
               alt="A golden chain with a silver pendant"
@@ -225,16 +321,26 @@ export const HomeProduct: React.FC = () => {
                 Golden chain
               </h3>
               <p className="text-xs text-[#6b7280] flex-grow">22k - 8gm</p>
-              <button className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md hover:opacity-90 transition-opacity">
+              <motion.button
+                className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md"
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ opacity: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 View Product
-              </button>
+              </motion.button>
             </div>
           </motion.div>
           <motion.div
             className="bg-[#fdf8f6] rounded-lg overflow-hidden flex flex-col shadow-sm"
             variants={gridItemVariants}
             whileHover={{ scale: 1.02, y: -4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, y: 0 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <img
               alt="A golden chain with an emerald pendant"
@@ -246,16 +352,21 @@ export const HomeProduct: React.FC = () => {
                 Emerald chain
               </h3>
               <p className="text-xs text-[#6b7280] flex-grow">22k - 7.5gm</p>
-              <button className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md hover:opacity-90 transition-opacity">
+              <motion.button
+                className="mt-3 w-full bg-[#8c1d40] text-white text-sm font-medium py-2 rounded-md"
+                whileTap={{ scale: 0.95 }}
+                whileHover={{ opacity: 0.9 }}
+                transition={{ type: "spring", stiffness: 400, damping: 17 }}
+              >
                 View Product
-              </button>
+              </motion.button>
             </div>
           </motion.div>
         </div>
-      </motion.div>
+      </ScrollReveal>
 
       {/* Transaction History Section */}
-      <motion.div className="mb-8" variants={itemVariants}>
+      <ScrollReveal className="mb-8" delay={0.2}>
         <h2 className="text-xl font-bold mb-4 text-[#1f2937]">
           Transaction History
         </h2>
@@ -264,7 +375,12 @@ export const HomeProduct: React.FC = () => {
             className="flex items-center justify-between bg-[#fdf8f6] p-3 rounded-lg shadow-sm"
             variants={gridItemVariants}
             whileHover={{ x: 4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, x: 2 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <div className="flex items-center">
               <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
@@ -288,7 +404,12 @@ export const HomeProduct: React.FC = () => {
             className="flex items-center justify-between bg-[#fdf8f6] p-3 rounded-lg shadow-sm"
             variants={gridItemVariants}
             whileHover={{ x: 4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, x: 2 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <div className="flex items-center">
               <div className="w-10 h-10 bg-red-100 rounded-full flex items-center justify-center mr-3">
@@ -312,7 +433,12 @@ export const HomeProduct: React.FC = () => {
             className="flex items-center justify-between bg-[#fdf8f6] p-3 rounded-lg shadow-sm"
             variants={gridItemVariants}
             whileHover={{ x: 4 }}
-            transition={{ duration: 0.2 }}
+            whileTap={{ scale: 0.98, x: 2 }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             <div className="flex items-center">
               <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center mr-3">
@@ -338,12 +464,13 @@ export const HomeProduct: React.FC = () => {
               href="#"
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              transition={{ type: "spring", stiffness: 400, damping: 17 }}
             >
               View All
             </motion.a>
           </div>
         </div>
-      </motion.div>
+      </ScrollReveal>
     </motion.div>
   );
 };
